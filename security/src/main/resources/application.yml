@@ -1,0 +1,43 @@
+# Server Configuration
+server:
+  port: 8081
+  error:
+    include-message: always
+    include-binding-errors: always
+
+
+# Spring Configuration
+spring:
+  #to enable colors when you run your app outside intellij
+  output:
+    ansi:
+      enabled: always
+
+  # Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/security_spring_jwt?createDatabaseIfNotExist=true
+    username: postgres
+    password: root
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    generate-ddl: true
+
+  liquibase:
+    enabled: false
+  main:
+    lazy-initialization: false
+
+
+
+token:
+  signing:
+    key: Q2lyNXNOTENrV1dNRGI2NDlJc1p5bTBxM2p1M2RZeTc1amtmbW1HRnZHST0=
+  validity:
+    access:
+      in:
+        minutes: 1400
+    refresh:
+      in:
+        month: 1
