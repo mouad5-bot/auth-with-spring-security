@@ -1,6 +1,6 @@
 package com.youcode.security.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 

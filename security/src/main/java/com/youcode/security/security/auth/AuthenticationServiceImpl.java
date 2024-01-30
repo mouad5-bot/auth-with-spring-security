@@ -4,13 +4,13 @@ import com.youcode.security.entities.Role;
 import com.youcode.security.entities.AppUser;
 import com.youcode.security.repository.UserRepository;
 import com.youcode.security.security.RoleConstant;
-import com.youcode.security.security.auth.AuthenticationService;
 import com.youcode.security.security.jwt.JwtService;
 import com.youcode.security.security.jwt.TokenType;
 import com.youcode.security.service.RoleService;
 import com.youcode.security.service.UserService;
 import com.youcode.security.web.dto.SignInRequest;
 import com.youcode.security.web.dto.SignUpRequest;
+import com.youcode.security.web.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -75,7 +75,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse refreshToken(String  refreshToken) throws ValidationException {
         if(jwtService.isTokenValid(refreshToken, TokenType.REFRESH_TOKEN)) {
             String username = jwtService.extractUserName(refreshToken);
-            var user = userRepository.findByEmail(username).orElseThrow(() -> new ValidationException(new CustomError("email", "User not found")));
+            var user = userRepository.findByEmail(username).orElseThrow(() -> new ValidationException("User not found"));
             var accessToken = jwtService.generateToken(user, TokenType.ACCESS_TOKEN);
             return JwtAuthenticationResponse.builder()
                     .accessToken(accessToken)
